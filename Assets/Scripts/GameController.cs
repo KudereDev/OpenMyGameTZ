@@ -8,17 +8,13 @@ using Newtonsoft.Json;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private Vector2 blockSize = Vector2.one;
-    [SerializeField] private GameObject blockPref;
+
     private void Awake()
     {
         SaveFirstLevelAsJson();
     }
 
-    private void SetUpGrid(Vector2Int gridSize, int[,] blockMap) 
-    {
-
-    }
+    
 
     private void SaveFirstLevelAsJson() 
     {
@@ -54,18 +50,7 @@ public class GameController : MonoBehaviour
         public List<string> pinpointPosition = new List<string>();
     }
 
-    public enum BlockType
-    {
-        Fire,
-        Water,
-    }
+    
 
-    public enum SwipeType 
-    {
-        Left, 
-        Right,
-        Up,
-        Down, 
-        Failed
-    }
+
 }
