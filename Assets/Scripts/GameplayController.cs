@@ -23,14 +23,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField] private BlocksLocalDB dataBase;
     private Dictionary<BlockType, BlockData> loadedBlocks = new Dictionary<BlockType, BlockData>();
 
-    public enum SwipeType
-    {
-        Left,
-        Right,
-        Up,
-        Down,
-        Failed
-    }
+    
 
     private void Awake()
     {

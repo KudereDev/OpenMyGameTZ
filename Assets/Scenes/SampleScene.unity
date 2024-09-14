@@ -740,6 +740,7 @@ GameObject:
   - component: {fileID: 946312245}
   - component: {fileID: 946312246}
   - component: {fileID: 946312247}
+  - component: {fileID: 946312248}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -791,6 +792,18 @@ MonoBehaviour:
   blockPref: {fileID: 4214796406231515595, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
   blockHolder: {fileID: 601651500}
   dataBase: {fileID: 11400000, guid: f301423f293c1bb41b604c9114dbfde4, type: 2}
+--- !u!114 &946312248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946312244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca160231b9d869042a02f2126b12694e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1180974819
 GameObject:
   m_ObjectHideFlags: 0
