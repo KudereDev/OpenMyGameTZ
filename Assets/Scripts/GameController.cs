@@ -11,12 +11,14 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        SaveFirstLevelAsJson();
+        var testLevel = SaveFirstLevelAsJson();
+
+        GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
     }
 
     
 
-    private void SaveFirstLevelAsJson() 
+    private List<BlockPlacements> SaveFirstLevelAsJson() 
     {
         List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
 
@@ -34,13 +36,15 @@ public class GameController : MonoBehaviour
         firstLevelFire.pinpointPosition.Add("3x0");
         firstLevelFire.pinpointPosition.Add("4x0");
 
-        blockPlacements.Add(firstLevelWater);
+        blockPlacements.Add(firstLevelFire);
 
         var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
         Debug.Log(jsonString);
 
         var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
         Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
+
+        return objectFromJson;
     }
 
     [System.Serializable]

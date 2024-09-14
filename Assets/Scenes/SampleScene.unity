@@ -123,37 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &277276722 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5226742667711644116, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
-  m_PrefabInstance: {fileID: 7375697173349221171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &277276723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3627819665863609184, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
   m_PrefabInstance: {fileID: 7375697173349221171}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &277276725
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277276722}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 53bd6786fd22eaf4d8d7600936769fbc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &471121223
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +529,7 @@ Transform:
   m_GameObject: {fileID: 601651499}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6, y: -2.09, z: 0}
+  m_LocalPosition: {x: 3.6, y: -2.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -814,7 +788,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockSize: {x: 1, y: 1}
-  blockPref: {fileID: 5226742667711644116, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
+  blockPref: {fileID: 4214796406231515595, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
+  blockHolder: {fileID: 601651500}
+  dataBase: {fileID: 11400000, guid: f301423f293c1bb41b604c9114dbfde4, type: 2}
 --- !u!1 &1180974819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,10 +1240,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5226742667711644116, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 277276725}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90d0cb1c4774b10458c12f501290b58c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
