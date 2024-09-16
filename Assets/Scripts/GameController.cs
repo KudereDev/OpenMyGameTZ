@@ -8,23 +8,49 @@ using Newtonsoft.Json;
 
 public class GameController : MonoBehaviour
 {
+    public int currentLevel = 0;
+    public List<string> levelsJson = new List<string>();
+
 
     private void Start()
     {
-        var testLevel = SaveThirdLevelAsJson();
+        SaveFirstLevelAsJson();
+        SaveSecondLevelAsJson();
+        SaveThirdLevelAsJson();
 
-        GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
-        UIController.Instance.SetupUI(ReloadLevel);
+        var testLevel = ParseLevelJson(levelsJson[currentLevel]);
+        StartGame(testLevel);
+
+        UIController.Instance.SetupUI(ReloadLevel, ContinueGame);
+        UIController.Instance.HideWinScreen();
+    }
+
+    private void StartGame(List<BlockPlacements> level) 
+    {
+        GameplayController.Instance.SetUp(new Vector2Int(5, 8), level);
     }
 
     private void ReloadLevel() 
     {
-        var testLevel = SaveSecondLevelAsJson();
+        var testLevel = ParseLevelJson(levelsJson[currentLevel]);
 
         GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
     }
 
-    private List<BlockPlacements> SaveFirstLevelAsJson() 
+    private void ContinueGame() 
+    {
+        UIController.Instance.HideWinScreen();
+        currentLevel++;
+        if (currentLevel >= levelsJson.Count) 
+        {
+            currentLevel = Random.Range(0, levelsJson.Count);
+        }
+
+        var parsedData = ParseLevelJson(levelsJson[currentLevel]);
+        StartGame(parsedData);
+    }
+
+    private void SaveFirstLevelAsJson() 
     {
         List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
 
@@ -46,14 +72,10 @@ public class GameController : MonoBehaviour
 
         var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
         Debug.Log(jsonString);
-
-        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
-        Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
-
-        return objectFromJson;
+        levelsJson.Add(jsonString);
     }
 
-    private List<BlockPlacements> SaveSecondLevelAsJson() 
+    private void SaveSecondLevelAsJson() 
     {
         List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
 
@@ -87,14 +109,10 @@ public class GameController : MonoBehaviour
 
         var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
         Debug.Log(jsonString);
-
-        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
-        Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
-
-        return objectFromJson;
+        levelsJson.Add(jsonString);
     }
 
-    private List<BlockPlacements> SaveThirdLevelAsJson()
+    private void SaveThirdLevelAsJson()
     {
         List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
 
@@ -128,8 +146,12 @@ public class GameController : MonoBehaviour
 
         var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
         Debug.Log(jsonString);
+        levelsJson.Add(jsonString);
+    }
 
-        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
+    private List<BlockPlacements> ParseLevelJson(string levelJson) 
+    {
+        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(levelJson);
         Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
 
         return objectFromJson;
