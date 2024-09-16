@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 public class GameController : MonoBehaviour
 {
 
-    private void Awake()
+    private void Start()
     {
-        var testLevel = SaveFirstLevelAsJson();
+        var testLevel = SaveThirdLevelAsJson();
 
         GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
     }
@@ -35,6 +35,88 @@ public class GameController : MonoBehaviour
         firstLevelFire.pinpointPosition.Add("2x1");
         firstLevelFire.pinpointPosition.Add("3x0");
         firstLevelFire.pinpointPosition.Add("4x0");
+
+        blockPlacements.Add(firstLevelFire);
+
+        var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
+        Debug.Log(jsonString);
+
+        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
+        Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
+
+        return objectFromJson;
+    }
+
+    private List<BlockPlacements> SaveSecondLevelAsJson() 
+    {
+        List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
+
+        var firstLevelWater = new BlockPlacements();
+        firstLevelWater.BlockType = BlockType.Water.ToString();
+        firstLevelWater.pinpointPosition.Add("0x0");
+        firstLevelWater.pinpointPosition.Add("2x0");
+        firstLevelWater.pinpointPosition.Add("3x0");
+        firstLevelWater.pinpointPosition.Add("0x1");
+        firstLevelWater.pinpointPosition.Add("2x1");
+        firstLevelWater.pinpointPosition.Add("3x1");
+        firstLevelWater.pinpointPosition.Add("1x2");
+        firstLevelWater.pinpointPosition.Add("0x3");
+        firstLevelWater.pinpointPosition.Add("2x3");
+        firstLevelWater.pinpointPosition.Add("3x3");
+        firstLevelWater.pinpointPosition.Add("0x4");
+        firstLevelWater.pinpointPosition.Add("1x4");
+
+        blockPlacements.Add(firstLevelWater);
+
+        var firstLevelFire = new BlockPlacements();
+        firstLevelFire.BlockType = BlockType.Fire.ToString();
+        firstLevelFire.pinpointPosition.Add("1x0");
+        firstLevelFire.pinpointPosition.Add("1x1");
+        firstLevelFire.pinpointPosition.Add("0x2");
+        firstLevelFire.pinpointPosition.Add("2x2");
+        firstLevelFire.pinpointPosition.Add("3x2");
+        firstLevelFire.pinpointPosition.Add("1x3");
+
+        blockPlacements.Add(firstLevelFire);
+
+        var jsonString = JsonConvert.SerializeObject(blockPlacements, Formatting.Indented);
+        Debug.Log(jsonString);
+
+        var objectFromJson = JsonConvert.DeserializeObject<List<BlockPlacements>>(jsonString);
+        Debug.Log($"Object from Json data, {objectFromJson[0].BlockType} + {objectFromJson[1].pinpointPosition.Count}");
+
+        return objectFromJson;
+    }
+
+    private List<BlockPlacements> SaveThirdLevelAsJson()
+    {
+        List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
+
+        var firstLevelWater = new BlockPlacements();
+        firstLevelWater.BlockType = BlockType.Water.ToString();
+        firstLevelWater.pinpointPosition.Add("0x0");
+        firstLevelWater.pinpointPosition.Add("2x0");
+        firstLevelWater.pinpointPosition.Add("3x0");
+        firstLevelWater.pinpointPosition.Add("0x1");
+        firstLevelWater.pinpointPosition.Add("2x1");
+        firstLevelWater.pinpointPosition.Add("3x1");
+        firstLevelWater.pinpointPosition.Add("1x2");
+        firstLevelWater.pinpointPosition.Add("0x3");
+        firstLevelWater.pinpointPosition.Add("1x3");
+        firstLevelWater.pinpointPosition.Add("3x3");
+        firstLevelWater.pinpointPosition.Add("0x4");
+        firstLevelWater.pinpointPosition.Add("1x5");
+
+        blockPlacements.Add(firstLevelWater);
+
+        var firstLevelFire = new BlockPlacements();
+        firstLevelFire.BlockType = BlockType.Fire.ToString();
+        firstLevelFire.pinpointPosition.Add("1x0");
+        firstLevelFire.pinpointPosition.Add("1x1");
+        firstLevelFire.pinpointPosition.Add("0x2");
+        firstLevelFire.pinpointPosition.Add("2x2");
+        firstLevelFire.pinpointPosition.Add("3x2");
+        firstLevelFire.pinpointPosition.Add("1x4");
 
         blockPlacements.Add(firstLevelFire);
 
