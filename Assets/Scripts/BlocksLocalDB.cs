@@ -13,7 +13,6 @@ public class BlocksLocalDB : ScriptableObject
         public string Name;
         public BlockType Type;
 
-        //Add animators and idle block sprite for object
         public RuntimeAnimatorController Animator;
         public Sprite BlockSprite;
     }    

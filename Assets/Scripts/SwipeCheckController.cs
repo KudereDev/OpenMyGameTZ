@@ -41,7 +41,6 @@ public class SwipeCheckController : MonoBehaviour
             endingPosition = Input.mousePosition;
             var xDelta = endingPosition.x - startingPosition.x;
             var yDelta = endingPosition.y - startingPosition.y;
-            //Debug.Log($"Mouse touch ended, xDelta:{xDelta}, yDelta:{yDelta}");
             var checkSwipeType = PointSwipeType(xDelta, yDelta);
 
             if (checkSwipeType == SwipeType.Failed) 

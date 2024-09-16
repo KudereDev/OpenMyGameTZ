@@ -5,13 +5,6 @@ using static GameController;
 using static BlocksLocalDB;
 using System;
 
-//Simulate gameplay zone, check Touch/Drag imput from player 
-//Force block to go for player swipe type with fail safe for touch without dragrging and dragging for bad direction 
-//On swipe end and command block to do thing, do specific stuff 
-
-// - On block swapping, swap block and check for 3rd in row 
-// - On block swap to empty area make block drop by animation to lowest point in grin for X,Y of block 
-// - On all blocks destroyed flag level as win. 
 public class GameplayController : MonoBehaviour
 {
     public static GameplayController Instance;
@@ -306,12 +299,12 @@ public class GameplayController : MonoBehaviour
         if (blocksForSimulation.Count == 0) 
         {
             lockSwipes = false;
+            CheckWinState();
             return false;
         }
 
         for (int i = 0; i < blocksForSimulation.Count; i++) 
         {
-            //Check lowest block that block can be transfered to; 
             int maxAmountOfSteps = 0;
             for (int checkBlockHight = blocksForSimulation[i].y - 1; checkBlockHight >= 0; checkBlockHight--) 
             {
@@ -476,6 +469,14 @@ public class GameplayController : MonoBehaviour
             var block = simulatedGrid[blockPosition];
             block.DestroyBlock(onDestroy);
             simulatedGrid.Remove(blockPosition);
+        }
+    }
+
+    private void CheckWinState()
+    {
+        if (simulatedGrid.Count == 0)
+        {
+            UIController.Instance.ShowWinScreen();
         }
     }
  }

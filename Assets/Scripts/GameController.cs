@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-//Startup game, load current level, push current level to gameplay controller to create grid and player play zone
-//Restrart game after losing/restart, saving current level status to player prefs to be loaded after restarting app
-
 public class GameController : MonoBehaviour
 {
     public int currentLevel = 0;
