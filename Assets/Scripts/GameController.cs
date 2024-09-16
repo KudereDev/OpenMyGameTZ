@@ -14,9 +14,15 @@ public class GameController : MonoBehaviour
         var testLevel = SaveThirdLevelAsJson();
 
         GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
+        UIController.Instance.SetupUI(ReloadLevel);
     }
 
-    
+    private void ReloadLevel() 
+    {
+        var testLevel = SaveSecondLevelAsJson();
+
+        GameplayController.Instance.SetUp(new Vector2Int(5, 8), testLevel);
+    }
 
     private List<BlockPlacements> SaveFirstLevelAsJson() 
     {
@@ -135,8 +141,4 @@ public class GameController : MonoBehaviour
         public string BlockType;
         public List<string> pinpointPosition = new List<string>();
     }
-
-    
-
-
 }
