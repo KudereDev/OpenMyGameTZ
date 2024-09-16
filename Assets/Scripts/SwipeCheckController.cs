@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class SwipeCheckController : MonoBehaviour
 {
+    [SerializeField] private Vector2 screenSwipeSesitivity;
     Vector3 startingPosition;
     Vector3 endingPosition;
-    Vector2 screenSesitivity = new Vector2(Screen.width / 2, Screen.height / 2);
 
-
+    private void Awake()
+    {
+        screenSwipeSesitivity = new Vector2(Screen.width / 4, Screen.height / 4);
+    }
 
     private void Update()
     {
@@ -36,41 +39,62 @@ public class SwipeCheckController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             endingPosition = Input.mousePosition;
+            var xDelta = endingPosition.x - startingPosition.x;
+            var yDelta = endingPosition.y - startingPosition.y;
+            //Debug.Log($"Mouse touch ended, xDelta:{xDelta}, yDelta:{yDelta}");
+            var checkSwipeType = PointSwipeType(xDelta, yDelta);
 
-            Debug.Log($"Mouse touch ended, xDelta:{endingPosition.x - startingPosition.x}, yDelta:{endingPosition.y - startingPosition.y}");
+            if (checkSwipeType == SwipeType.Failed) 
+            {
+                return;
+            }
+
+            GameplayController.Instance.CheckAndMoveBlock(startingPosition, checkSwipeType);
         }
 #endif
-
     }
 
-    private void PointSwipeType(float xDelta, float yDelta)
+    private SwipeType PointSwipeType(float xDelta, float yDelta)
     {
-        if (Mathf.Abs(xDelta) < screenSesitivity.x && Mathf.Abs(yDelta) < screenSesitivity.y)
+        if (Mathf.Abs(xDelta) < screenSwipeSesitivity.x && Mathf.Abs(yDelta) < screenSwipeSesitivity.y)
         {
-            return;
+            return SwipeType.Failed;
         }
 
         if (Mathf.Abs(xDelta) >= Mathf.Abs(yDelta))
         {
             if (xDelta < 0) 
             {
-                //Swipe left
+                return SwipeType.Left;
             }
             else
             {
-                //Swipe right
+                return SwipeType.Right;
             }
+
         }
         else 
         {
             if (yDelta < 0)
             {
-                //Swipe down
+                return SwipeType.Down;
             }
             else
             {
-                //Swipe up
+                return SwipeType.Up;
             }
+        }
+    }
+
+    public struct SwipeData 
+    {
+        public Vector3 startMousePosition;
+        public SwipeType swipeType;
+
+        public SwipeData(Vector3 position, SwipeType type) 
+        {
+            this.startMousePosition = position;
+            this.swipeType = type;
         }
     }
 }
@@ -81,4 +105,5 @@ public enum SwipeType
     Right,
     Up,
     Down,
+    Failed
 }
