@@ -4,6 +4,7 @@ using UnityEngine;
 using static GameController;
 using static BlocksLocalDB;
 using System;
+using UnityEngine.UIElements;
 
 public class GameplayController : MonoBehaviour
 {
@@ -95,7 +96,6 @@ public class GameplayController : MonoBehaviour
 
     private void SetUpGrid(Vector2Int gridSize, List<BlockPlacements> placements)
     {
-        Debug.Log($"Block placements count:{placements.Count}");
         gridMap = ConvertBlockPlacementToIdGrid(gridSize, placements);
         
         for (int y = 0; y < gridSize.y; y++) 
@@ -142,7 +142,6 @@ public class GameplayController : MonoBehaviour
             }
 
             BlockType parsed_enum = (BlockType)System.Enum.Parse(typeof(BlockType), placements[i].BlockType);
-            Debug.Log($"Check block type:{parsed_enum} ");
 
             for(int j = 0; j < placements[i].pinpointPosition.Count; j++) 
             {
@@ -167,8 +166,6 @@ public class GameplayController : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("Target: " + hit.collider.gameObject.name);
-
             return hit.collider.gameObject.GetComponent<BlockView>();
         }
 
@@ -228,7 +225,6 @@ public class GameplayController : MonoBehaviour
         targetBlock.transform.position = new Vector3(blockHolder.position.x + blockSize.x * targetPosition.x,
             blockHolder.position.x + blockSize.y * targetPosition.y, blockHolder.position.z);
         targetBlock.name = $"{(BlockType)gridMap[targetPosition.x, targetPosition.y]}_Block[{targetPosition.x},{targetPosition.y}]";
-        Debug.Log($"Change target block position to:{targetPosition}");
 
         if (simulatedGrid.ContainsKey(targetPosition))
         {
@@ -367,7 +363,7 @@ public class GameplayController : MonoBehaviour
                 if (gridMap[x, y] == checkBlockType && checkBlockType != 0)
                 {
                     blockInRowNumber++;
-                    //Debug.Log($"Horisontal Check type:{checkBlockType}, blocksInRow:{blockInRowNumber}, full info: [Check Row/Pos:{x},{y}], [GridIdData:{gridMap[x,y]}]");
+                    
                     if (blockInRowNumber >= 3) 
                     {
                         for (int i = 0; i < blockInRowNumber; i++)
@@ -386,7 +382,6 @@ public class GameplayController : MonoBehaviour
             {
                 debugResult += block.ToString();
             }
-            //Debug.Log($"Number block to destroy: {destroyList.Count}, {debugResult}");
         }
 
         //Vertical Check
@@ -420,7 +415,7 @@ public class GameplayController : MonoBehaviour
                 if (gridMap[x, y] == checkBlockType && checkBlockType != 0)
                 {
                     blockInRowNumber++;
-                    Debug.Log($"Vertical Check type:{checkBlockType}, blocksInRow:{blockInRowNumber}, full info: [Check Row/Pos:{x},{y}], [GridIdData:{gridMap[x, y]}]");
+                  
                     if (blockInRowNumber >= 3)
                     {
                         for (int i = 0; i < blockInRowNumber; i++)
@@ -439,7 +434,6 @@ public class GameplayController : MonoBehaviour
             {
                 debugResult += block.ToString();
             }
-            Debug.Log($"Number block to destroy: {destroyList.Count}, {debugResult}");
         }
 
         if (destroyList.Count > 0) 
@@ -478,5 +472,47 @@ public class GameplayController : MonoBehaviour
         {
             UIController.Instance.ShowWinScreen();
         }
+    }
+
+    public List<BlockPlacements> SaveCurrentMap() 
+    {
+        List<BlockPlacements> blockPlacements = new List<BlockPlacements>();
+        for (int y = 0; y < gridSize.y; y++) 
+        {
+            for (int x = 0; x < gridSize.x; x++) 
+            {
+                if (gridMap[x, y] == 0)
+                    continue;
+                var existingData = new BlockPlacements();
+                switch ((BlockType)gridMap[x, y])
+                {
+                    case BlockType.Fire:
+                        existingData = blockPlacements.Find(d => d.BlockType == BlockType.Fire.ToString());
+                        if (existingData is null) 
+                        {
+                            var firePlacement = new BlockPlacements();
+                            firePlacement.BlockType = BlockType.Fire.ToString();
+                            blockPlacements.Add(firePlacement);
+                            existingData = firePlacement;
+                        }
+                        break;
+
+                    case BlockType.Water:
+                        existingData = blockPlacements.Find(d => d.BlockType == BlockType.Water.ToString());
+                        if (existingData is null)
+                        {
+                            var waterPlacement = new BlockPlacements();
+                            waterPlacement.BlockType = BlockType.Water.ToString();
+                            blockPlacements.Add(waterPlacement);
+                            existingData = waterPlacement;
+                        }
+                        break;
+                }
+
+                existingData.pinpointPosition.Add($"{x}x{y}");
+            }
+        }
+
+        return blockPlacements;
     }
  }

@@ -26,8 +26,16 @@ public class SwipeCheckController : MonoBehaviour
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 endingPosition = Input.GetTouch(0).position;
+                var xDelta = endingPosition.x - startingPosition.x;
+                var yDelta = endingPosition.y - startingPosition.y;
+                var checkSwipeType = PointSwipeType(xDelta, yDelta);
 
-                Debug.Log($"Mouse touch ended, xDelta:{endingPosition.x - startingPosition.x}, yDelta:{endingPosition.y - startingPosition.y}");
+                if (checkSwipeType == SwipeType.Failed) 
+                {
+                    return;
+                }
+
+                GameplayController.Instance.CheckAndMoveBlock(startingPosition, checkSwipeType);
             }
         }
 #elif UNITY_EDITOR_WIN
